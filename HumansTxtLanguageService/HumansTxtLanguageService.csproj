@@ -46,6 +46,8 @@
     <Compile Include="Classification\HumansTxtClassifierClassificationDefinitions.cs" />
     <Compile Include="Classification\HumansTxtClassifierFormat.cs" />
     <Compile Include="Classification\HumansTxtClassifier.cs" />
+    <Compile Include="CodeCompletion\HumansTxtCompletionController.cs" />
+    <Compile Include="CodeCompletion\HumansTxtCompletionSource.cs" />
     <Compile Include="Formatting\HumansTxtAutomaticFormatter.cs" />
     <Compile Include="HumansTxtContentTypeNames.cs" />
     <Compile Include="Outlining\HumansTxtOutliningTagger.cs" />
