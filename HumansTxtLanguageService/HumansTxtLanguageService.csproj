@@ -41,6 +41,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="AutomaticCompletion\HumansTxtBraceCompletion.cs" />
     <Compile Include="BraceMatching\HumansTxtBraceMatchingTagger.cs" />
     <Compile Include="Classification\HumansTxtClassifierClassificationDefinitions.cs" />
     <Compile Include="Classification\HumansTxtClassifierFormat.cs" />

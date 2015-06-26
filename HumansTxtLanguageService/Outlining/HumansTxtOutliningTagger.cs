@@ -37,14 +37,14 @@ namespace HumansTxtLanguageService
                 if (e.After != _buffer.CurrentSnapshot)
                     return;
 
-                /*SnapshotSpan? changedSpan = null;
+                SnapshotSpan? changedSpan = null;
 
                 // examine old version
                 SyntaxTree oldSyntaxTree = e.Before.GetSyntaxTree();
-                IniDocumentSyntax oldRoot = oldSyntaxTree.Root as IniDocumentSyntax;
+                HumansTxtDocumentSyntax oldRoot = oldSyntaxTree.Root as HumansTxtDocumentSyntax;
 
                 // find affected sections
-                IReadOnlyCollection<IniSectionSyntax> oldChangedSections = (
+                IReadOnlyCollection<HumansTxtSectionSyntax> oldChangedSections = (
                     from change in e.Changes
                     from section in oldRoot.Sections
                     where section.Span.IntersectsWith(change.OldSpan)
@@ -66,10 +66,10 @@ namespace HumansTxtLanguageService
 
                 // examine current version
                 SyntaxTree syntaxTree = e.After.GetSyntaxTree();
-                IniDocumentSyntax root = syntaxTree.Root as IniDocumentSyntax;
+                HumansTxtDocumentSyntax root = syntaxTree.Root as HumansTxtDocumentSyntax;
 
                 // find affected sections
-                IReadOnlyCollection<IniSectionSyntax> changedSections = (
+                IReadOnlyCollection<HumansTxtSectionSyntax> changedSections = (
                     from change in e.Changes
                     from section in root.Sections
                     where section.Span.IntersectsWith(change.NewSpan)
@@ -96,7 +96,7 @@ namespace HumansTxtLanguageService
 
                 // notify if any change affects outlining
                 if (changedSpan != null)
-                    this.TagsChanged?.Invoke(this, new SnapshotSpanEventArgs(changedSpan.Value));*/
+                    this.TagsChanged?.Invoke(this, new SnapshotSpanEventArgs(changedSpan.Value));
             }
             
 

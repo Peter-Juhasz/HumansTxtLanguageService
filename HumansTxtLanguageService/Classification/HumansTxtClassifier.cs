@@ -61,6 +61,27 @@ namespace HumansTxtLanguageService
             public HumansTxtClassifier(ITextBuffer buffer, ISyntacticParser syntacticParser, IClassificationTypeRegistryService registry)
             {
                 buffer.Properties.AddProperty(typeof(ISyntacticParser), syntacticParser);
+
+                buffer.Changed += OnBufferChanged;
+            }
+
+            private void OnBufferChanged(object sender, TextContentChangedEventArgs e)
+            {
+                // change affect multiple lines
+                if (e.Changes.Any(c =>
+                    c.OldText.Intersect(HumansTxtSyntaxFacts.SectionStart).Any() ||
+                    c.NewText.Intersect(HumansTxtSyntaxFacts.SectionStart).Any()
+                ))
+                {
+                    this.ClassificationChanged?.Invoke(this,
+                        new ClassificationChangedEventArgs(
+                            new SnapshotSpan(
+                                new SnapshotPoint(e.After, e.Changes.OrderBy(c => c.NewPosition).First().NewPosition),
+                                new SnapshotPoint(e.After, e.After.Length)
+                            )
+                        )
+                    );
+                }
             }
 
 #pragma warning disable 67
