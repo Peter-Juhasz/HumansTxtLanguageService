@@ -12,19 +12,19 @@ namespace HumansTxtLanguageService
     [Export(typeof(ITaggerProvider))]
     [TagType(typeof(IOutliningRegionTag))]
     [ContentType(HumansTxtContentTypeNames.HumansTxt)]
-    internal sealed class IniOutliningTaggerProvider : ITaggerProvider
+    internal sealed class HumansTxtOutliningTaggerProvider : ITaggerProvider
     {
         public ITagger<T> CreateTagger<T>(ITextBuffer buffer) where T : ITag
         {
             return buffer.Properties.GetOrCreateSingletonProperty(
-                creator: () => new IniOutliningTagger(buffer)
+                creator: () => new HumansTxtOutliningTagger(buffer)
             ) as ITagger<T>;
         }
 
 
-        private sealed class IniOutliningTagger : ITagger<IOutliningRegionTag>
+        private sealed class HumansTxtOutliningTagger : ITagger<IOutliningRegionTag>
         {
-            public IniOutliningTagger(ITextBuffer buffer)
+            public HumansTxtOutliningTagger(ITextBuffer buffer)
             {
                 _buffer = buffer;
                 _buffer.ChangedLowPriority += OnBufferChanged;

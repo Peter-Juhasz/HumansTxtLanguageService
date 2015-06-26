@@ -45,10 +45,11 @@
     <Compile Include="Classification\HumansTxtClassifierClassificationDefinitions.cs" />
     <Compile Include="Classification\HumansTxtClassifierFormat.cs" />
     <Compile Include="Classification\HumansTxtClassifier.cs" />
+    <Compile Include="Formatting\HumansTxtAutomaticFormatter.cs" />
     <Compile Include="HumansTxtContentTypeNames.cs" />
-    <Compile Include="Outlining\IniOutliningTagger.cs" />
+    <Compile Include="Outlining\HumansTxtOutliningTagger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Syntax\IniSectionSyntax.cs" />
+    <Compile Include="Syntax\HumansTxtSectionSyntax.cs" />
     <Compile Include="Syntax\ISyntacticParser.cs" />
     <Compile Include="Syntax\HumansTxtSyntaxFacts.cs" />
     <Compile Include="Syntax\HumansTxtSyntacticParser.cs" />
