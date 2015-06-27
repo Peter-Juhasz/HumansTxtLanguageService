@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Linq;
 using System.Windows.Media;
+using HumansTxtLanguageService.Documentation;
 
 namespace HumansTxtLanguageService.CodeCompletion
 {
@@ -41,6 +42,8 @@ namespace HumansTxtLanguageService.CodeCompletion
             private readonly ImageSource _glyph;
             private bool _disposed = false;
 
+            private static readonly IReadOnlyCollection<string> WellKnownSectionTitles = new[] { "team", "thanks", "site" };
+
 
             public void AugmentCompletionSession(ICompletionSession session, IList<CompletionSet> completionSets)
             {
@@ -61,7 +64,7 @@ namespace HumansTxtLanguageService.CodeCompletion
                 var section = root.Sections
                     .FirstOrDefault(s =>
                         s.OpeningBracketToken.Span.Span.End <= triggerPoint.Value &&
-                        triggerPoint.Value <= s.ClosingBracketToken.Span.Span.Start
+                        (triggerPoint.Value <= s.ClosingBracketToken.Span.Span.Start || s.ClosingBracketToken.IsMissing)
                     );
 
                 if (section != null)
@@ -72,11 +75,18 @@ namespace HumansTxtLanguageService.CodeCompletion
                     if (!section.NameToken.IsMissing)
                         applicableTo = snapshot.CreateTrackingSpan(section.NameToken.Span.Span, SpanTrackingMode.EdgeInclusive);
 
+                    // gather all other section titles
+                    var otherSections = root.Sections.Where(s => s != section);
+                    var otherSectionTitles = otherSections
+                        .Where(s => !s.NameToken.IsMissing)
+                        .Select(s => s.NameToken.Value)
+                        .ToList();
+
                     // recommend
-                    IList<Completion> completions = new List<Completion>();
-                    completions.Add(new Completion("team", "TEAM", "", _glyph, "TEAM"));
-                    completions.Add(new Completion("thanks", "THANKS", "", _glyph, "THANKS"));
-                    completions.Add(new Completion("site", "SITE", "", _glyph, "SITE"));
+                    IList<Completion> completions = WellKnownSectionTitles
+                        .Except(otherSectionTitles, StringComparer.InvariantCultureIgnoreCase)
+                        .Select(t => new Completion(t, t.ToUpperInvariant(), HumansTxtDocumentation.GetDocumentation(t), _glyph, t))
+                        .ToList();
 
                     completionSets.Add(
                         new CompletionSet("All", "All", applicableTo, completions, Enumerable.Empty<Completion>())

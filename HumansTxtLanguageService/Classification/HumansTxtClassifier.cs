@@ -19,7 +19,7 @@ namespace HumansTxtLanguageService
     [Export(typeof(IClassifierProvider))]
     [ContentType(HumansTxtContentTypeNames.HumansTxt)] // This classifier applies to all text files.
     [Order(Before = Priority.High)]
-    internal sealed class RobotsTxtClassifierProvider : IClassifierProvider
+    internal sealed class HumansTxtClassifierProvider : IClassifierProvider
     {
 #pragma warning disable 649
 
@@ -50,7 +50,7 @@ namespace HumansTxtLanguageService
 
 
         /// <summary>
-        /// Classifier that classifies all text as an instance of the "RobotsTxtClassifier" classification type.
+        /// Classifier that classifies all text as an instance of the "HumansTxtClassifier" classification type.
         /// </summary>
         internal sealed class HumansTxtClassifier : IClassifier
         {
