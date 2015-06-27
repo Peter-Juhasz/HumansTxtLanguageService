@@ -26,6 +26,7 @@ namespace HumansTxtLanguageService.Syntax
         public SyntaxTree Parse(ITextSnapshot snapshot)
         {
             IList<HumansTxtSectionSyntax> sections = new List<HumansTxtSectionSyntax>();
+            HumansTxtDocumentSyntax root = new HumansTxtDocumentSyntax(sections) { Snapshot = snapshot };
 
             SnapshotPoint cursor = new SnapshotPoint(snapshot, 0);
             snapshot.ReadWhiteSpace(ref cursor);
@@ -45,6 +46,8 @@ namespace HumansTxtLanguageService.Syntax
 
                     var section = new HumansTxtSectionSyntax
                     {
+                        Document = root,
+
                         OpeningBracketToken = openingBracket,
                         TitleToken = sectionName,
                         ClosingBracketToken = closingBracket,
@@ -65,7 +68,6 @@ namespace HumansTxtLanguageService.Syntax
                 }
             }
             
-            HumansTxtDocumentSyntax root = new HumansTxtDocumentSyntax(sections) { Snapshot = snapshot };
             return new SyntaxTree(snapshot, root);
         }
     }
