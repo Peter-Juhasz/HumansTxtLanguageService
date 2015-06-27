@@ -14,12 +14,12 @@ namespace HumansTxtLanguageService.Syntax
         public HumansTxtSyntacticParser(IClassificationTypeRegistryService registry)
         {
             _delimiterType = registry.GetClassificationType("HumansTxt/Delimiter");
-            _sectionNameType = registry.GetClassificationType("HumansTxt/SectionName");
+            _sectionTitleType = registry.GetClassificationType("HumansTxt/SectionTitle");
             _sectionBodyType = registry.GetClassificationType(PredefinedClassificationTypeNames.NaturalLanguage);
         }
         
         private readonly IClassificationType _delimiterType;
-        private readonly IClassificationType _sectionNameType;
+        private readonly IClassificationType _sectionTitleType;
         private readonly IClassificationType _sectionBodyType;
 
 
@@ -36,7 +36,7 @@ namespace HumansTxtLanguageService.Syntax
                 {
                     SnapshotToken openingBracket = new SnapshotToken(snapshot.ReadSectionStart(ref cursor), _delimiterType);
                     snapshot.ReadWhiteSpace(ref cursor);
-                    SnapshotToken sectionName = new SnapshotToken(snapshot.ReadSectionName(ref cursor), _sectionNameType);
+                    SnapshotToken sectionName = new SnapshotToken(snapshot.ReadSectionName(ref cursor), _sectionTitleType);
                     snapshot.ReadWhiteSpace(ref cursor);
                     SnapshotToken closingBracket = new SnapshotToken(snapshot.ReadSectionEnd(ref cursor), _delimiterType);
                     snapshot.ReadWhiteSpace(ref cursor);
@@ -46,7 +46,7 @@ namespace HumansTxtLanguageService.Syntax
                     var section = new HumansTxtSectionSyntax
                     {
                         OpeningBracketToken = openingBracket,
-                        NameToken = sectionName,
+                        TitleToken = sectionName,
                         ClosingBracketToken = closingBracket,
                         BodyToken = body,
                     };

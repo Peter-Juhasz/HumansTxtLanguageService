@@ -83,26 +83,29 @@ namespace HumansTxtLanguageService.QuickInfo
 
                 // find section
                 HumansTxtSectionSyntax section = root.Sections
-                    .FirstOrDefault(s => s.NameToken.Span.Span.Contains(point));
+                    .FirstOrDefault(s => s.TitleToken.Span.Span.Contains(point));
                 
                 if (section != null)
                 {
                     IClassificationFormatMap formatMap = _classificationFormatMapService.GetClassificationFormatMap(session.TextView);
 
-                    string fieldName = section.NameToken.Value;
+                    string fieldName = section.TitleToken.Value;
                     
                     // get glyph
                     var glyph = _glyphService.GetGlyph(StandardGlyphGroup.GlyphKeyword, StandardGlyphItem.GlyphItemPublic);
-                    var classificationType = _classificationRegistry.GetClassificationType("HumansTxt/SectionName");
+                    var classificationType = _classificationRegistry.GetClassificationType("HumansTxt/SectionTitle");
                     var format = formatMap.GetTextProperties(classificationType);
 
                     // construct content
-                    string sectionTitle = section.NameToken.Value;
+                    string sectionTitle = section.TitleToken.Value;
 
                     var content = new QuickInfoContent
                     {
                         Glyph = glyph,
-                        Signature = new Run(sectionTitle) { Foreground = format.ForegroundBrush },
+                        Signature = new Run(sectionTitle) {
+                            Foreground = format.ForegroundBrush,
+                            FontWeight = format.Bold ? FontWeights.Bold : FontWeights.Normal,
+                        },
                         Documentation = HumansTxtDocumentation.GetDocumentation(sectionTitle),
                     };
                     
@@ -114,7 +117,7 @@ namespace HumansTxtLanguageService.QuickInfo
                             ContentTemplate = Template,
                         }
                     );
-                    applicableToSpan = snapshot.CreateTrackingSpan(section.NameToken.Span.Span, SpanTrackingMode.EdgeInclusive);
+                    applicableToSpan = snapshot.CreateTrackingSpan(section.TitleToken.Span.Span, SpanTrackingMode.EdgeInclusive);
                     return;
                 }
             }

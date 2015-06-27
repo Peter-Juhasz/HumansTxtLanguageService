@@ -80,7 +80,7 @@ namespace HumansTxtLanguageService.Formatting
 
             public void OnCharTyped(char @char)
             {
-                // format on '*'
+                // auto-complete on '*'
                 if (@char == HumansTxtSyntaxFacts.SectionStart.Last())
                 {
                     ITextBuffer buffer = _textView.TextBuffer;
@@ -94,7 +94,7 @@ namespace HumansTxtLanguageService.Formatting
                     HumansTxtSectionSyntax section = root.Sections
                         .FirstOrDefault(p => p.OpeningBracketToken.Span.Span.End == caret);
 
-                    if (section != null && section.NameToken.IsMissing && section.ClosingBracketToken.IsMissing)
+                    if (section != null && section.TitleToken.IsMissing && section.ClosingBracketToken.IsMissing)
                     {
                         using (ITextUndoTransaction transaction = _undoHistory.CreateTransaction("Brace Completion"))
                         {

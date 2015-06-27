@@ -18,7 +18,7 @@ namespace HumansTxtLanguageService.Syntax
 
         public SnapshotToken OpeningBracketToken { get; set; }
 
-        public SnapshotToken NameToken { get; set; }
+        public SnapshotToken TitleToken { get; set; }
 
         public SnapshotToken ClosingBracketToken { get; set; }
 
@@ -76,7 +76,7 @@ namespace HumansTxtLanguageService.Syntax
                 yield return token;
 
             yield return this.OpeningBracketToken;
-            yield return this.NameToken;
+            yield return this.TitleToken;
             yield return this.ClosingBracketToken;
 
             foreach (SnapshotToken token in this.TrailingTrivia)

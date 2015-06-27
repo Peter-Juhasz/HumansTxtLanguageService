@@ -87,19 +87,19 @@ namespace HumansTxtLanguageService.Formatting
                     HumansTxtSectionSyntax section = root.Sections
                         .FirstOrDefault(p => p.ClosingBracketToken.Span.Span.End == caret);
 
-                    if (section != null && !section.NameToken.IsMissing)
+                    if (section != null && !section.TitleToken.IsMissing)
                     {
                         using (ITextUndoTransaction transaction = _undoHistory.CreateTransaction("Automatic Formatting"))
                         {
                             using (ITextEdit edit = buffer.CreateEdit())
                             {
                                 // adjust white space between '/*' and name
-                                if (section.OpeningBracketToken.Span.Span.End + 1 != section.NameToken.Span.Span.Start)
-                                    edit.Replace(new SnapshotSpan(section.OpeningBracketToken.Span.Span.End, section.NameToken.Span.Span.Start), " ");
+                                if (section.OpeningBracketToken.Span.Span.End + 1 != section.TitleToken.Span.Span.Start)
+                                    edit.Replace(new SnapshotSpan(section.OpeningBracketToken.Span.Span.End, section.TitleToken.Span.Span.Start), " ");
 
                                 // adjust white space between name and '*/'
-                                if (section.NameToken.Span.Span.End + 1 != section.ClosingBracketToken.Span.Span.Start)
-                                    edit.Replace(new SnapshotSpan(section.NameToken.Span.Span.End, section.ClosingBracketToken.Span.Span.Start), " ");
+                                if (section.TitleToken.Span.Span.End + 1 != section.ClosingBracketToken.Span.Span.Start)
+                                    edit.Replace(new SnapshotSpan(section.TitleToken.Span.Span.End, section.ClosingBracketToken.Span.Span.Start), " ");
 
                                 edit.Apply();
                             }

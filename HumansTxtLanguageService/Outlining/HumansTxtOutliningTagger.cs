@@ -108,7 +108,7 @@ namespace HumansTxtLanguageService
 
                 return
                     from section in root.Sections
-                    where !section.NameToken.IsMissing && !section.BodyToken.IsMissing
+                    where !section.TitleToken.IsMissing && !section.BodyToken.IsMissing
                     where spans.IntersectsWith(section.Span)
                     let collapsibleSpan = new SnapshotSpan(
                         section.ClosingBracketToken.Span.Span.End,

@@ -54,7 +54,7 @@
     <Compile Include="Outlining\HumansTxtOutliningTagger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuickInfo\QuickInfoContent.cs" />
-    <Compile Include="QuickInfo\RobotsTxtQuickInfoProvider.cs" />
+    <Compile Include="QuickInfo\HumansTxtQuickInfoProvider.cs" />
     <Compile Include="Syntax\HumansTxtSectionSyntax.cs" />
     <Compile Include="Syntax\ISyntacticParser.cs" />
     <Compile Include="Syntax\HumansTxtSyntaxFacts.cs" />

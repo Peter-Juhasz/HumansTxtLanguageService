@@ -72,14 +72,14 @@ namespace HumansTxtLanguageService.CodeCompletion
                     // compute applicable to span
                     var applicableTo = snapshot.CreateTrackingSpan(new SnapshotSpan(triggerPoint.Value, triggerPoint.Value), SpanTrackingMode.EdgeInclusive);
 
-                    if (!section.NameToken.IsMissing)
-                        applicableTo = snapshot.CreateTrackingSpan(section.NameToken.Span.Span, SpanTrackingMode.EdgeInclusive);
+                    if (!section.TitleToken.IsMissing)
+                        applicableTo = snapshot.CreateTrackingSpan(section.TitleToken.Span.Span, SpanTrackingMode.EdgeInclusive);
 
                     // gather all other section titles
                     var otherSections = root.Sections.Where(s => s != section);
                     var otherSectionTitles = otherSections
-                        .Where(s => !s.NameToken.IsMissing)
-                        .Select(s => s.NameToken.Value)
+                        .Where(s => !s.TitleToken.IsMissing)
+                        .Select(s => s.TitleToken.Value)
                         .ToList();
 
                     // recommend
