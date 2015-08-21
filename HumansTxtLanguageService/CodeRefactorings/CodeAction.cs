@@ -5,6 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Windows.Media;
+using System.Threading.Tasks;
+using Microsoft.VisualStudio.Utilities;
+using Microsoft.VisualStudio.Imaging.Interop;
+using Microsoft.VisualStudio.Imaging;
 
 namespace HumansTxtLanguageService.CodeRefactorings
 {
@@ -59,15 +63,7 @@ namespace HumansTxtLanguageService.CodeRefactorings
             }
 
             private readonly CodeAction _action;
-
-            public IEnumerable<SuggestedActionSet> ActionSets
-            {
-                get
-                {
-                    return Enumerable.Empty<SuggestedActionSet>();
-                }
-            }
-
+            
             public string DisplayText
             {
                 get
@@ -83,15 +79,7 @@ namespace HumansTxtLanguageService.CodeRefactorings
                     return null;
                 }
             }
-
-            public ImageSource IconSource
-            {
-                get
-                {
-                    return null;
-                }
-            }
-
+            
             public string InputGestureText
             {
                 get
@@ -99,10 +87,13 @@ namespace HumansTxtLanguageService.CodeRefactorings
                     return null;
                 }
             }
-            
-            public object GetPreview(CancellationToken cancellationToken)
+
+            public ImageMoniker IconMoniker
             {
-                return null;
+                get
+                {
+                    return KnownMonikers.None;
+                }
             }
 
             public void Invoke(CancellationToken cancellationToken)
@@ -111,7 +102,34 @@ namespace HumansTxtLanguageService.CodeRefactorings
             }
 
 
-            public bool TryGetTelemetryId(out Guid telemetryId)
+            public bool HasActionSets
+            {
+                get
+                {
+                    return false;
+                }
+            }
+
+            public async Task<IEnumerable<SuggestedActionSet>> GetActionSetsAsync(CancellationToken cancellationToken)
+            {
+                return Enumerable.Empty<SuggestedActionSet>();
+            }
+
+            public bool HasPreview
+            {
+                get
+                {
+                    return false;
+                }
+            }
+
+            public async Task<object> GetPreviewAsync(CancellationToken cancellationToken)
+            {
+                return null;
+            }
+
+
+            bool ITelemetryIdProvider<Guid>.TryGetTelemetryId(out Guid telemetryId)
             {
                 telemetryId = Guid.Empty;
                 return false;
