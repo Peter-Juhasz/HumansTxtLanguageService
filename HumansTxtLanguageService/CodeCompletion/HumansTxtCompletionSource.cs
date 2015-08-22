@@ -49,7 +49,7 @@ namespace HumansTxtLanguageService.CodeCompletion
             {
                 if (_disposed)
                     return;
-                
+
                 // get snapshot
                 ITextSnapshot snapshot = _buffer.CurrentSnapshot;
                 var triggerPoint = session.GetTriggerPoint(snapshot);
@@ -85,7 +85,7 @@ namespace HumansTxtLanguageService.CodeCompletion
                     // recommend
                     IList<Completion> completions = WellKnownSectionTitles
                         .Except(otherSectionTitles, StringComparer.InvariantCultureIgnoreCase)
-                        .Select(t => new Completion(t, t.ToUpperInvariant(), HumansTxtDocumentation.GetDocumentation(t), _glyph, t))
+                        .Select(t => new Completion(t, t.ToUpper(), HumansTxtDocumentation.GetDocumentation(t), _glyph, t))
                         .ToList();
 
                     completionSets.Add(
@@ -93,7 +93,7 @@ namespace HumansTxtLanguageService.CodeCompletion
                     );
                 }
             }
-            
+
 
             public void Dispose()
             {

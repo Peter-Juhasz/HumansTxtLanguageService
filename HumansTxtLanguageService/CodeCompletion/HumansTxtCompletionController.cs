@@ -83,7 +83,8 @@ namespace HumansTxtLanguageService.CodeCompletion
                     switch ((VSConstants.VSStd2KCmdID)nCmdID)
                     {
                         case VSConstants.VSStd2KCmdID.AUTOCOMPLETE:
-                        case VSConstants.VSStd2KCmdID.COMPLETEWORD: // TODO: Commit if unique
+                        case VSConstants.VSStd2KCmdID.SHOWMEMBERLIST:
+                        case VSConstants.VSStd2KCmdID.COMPLETEWORD:
                             handled = StartSession();
                             break;
 
@@ -134,7 +135,7 @@ namespace HumansTxtLanguageService.CodeCompletion
 
                 return hresult;
             }
-            
+
             private void Filter()
             {
                 if (_currentSession == null)
@@ -182,7 +183,7 @@ namespace HumansTxtLanguageService.CodeCompletion
                     _currentSession.Dismissed += (sender, args) => _currentSession = null;
                     _currentSession.Start();
                 }
-                
+
                 return true;
             }
 
@@ -193,6 +194,7 @@ namespace HumansTxtLanguageService.CodeCompletion
                     switch ((VSConstants.VSStd2KCmdID)prgCmds[0].cmdID)
                     {
                         case VSConstants.VSStd2KCmdID.AUTOCOMPLETE:
+                        case VSConstants.VSStd2KCmdID.SHOWMEMBERLIST:
                         case VSConstants.VSStd2KCmdID.COMPLETEWORD:
                             prgCmds[0].cmdf = (uint)OLECMDF.OLECMDF_ENABLED | (uint)OLECMDF.OLECMDF_SUPPORTED;
                             return VSConstants.S_OK;
